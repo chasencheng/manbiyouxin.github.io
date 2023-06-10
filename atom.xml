@@ -38,6 +38,52 @@
   </entry>
   
   <entry>
+    <title>文本相似度</title>
+    <link href="http://www.chasenchen.space/posts/20230607c.html"/>
+    <id>http://www.chasenchen.space/posts/20230607c.html</id>
+    <published>2023-06-01T13:19:03.000Z</published>
+    <updated>2023-06-01T13:19:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Levenshtein">Levenshtein</h2><p>Levenshtein距离是一种用于计算两个字符串之间的编辑距离的算法，可以用Java语言实现。在Java中，可以使用一个叫做Apache Commons Lang库中的StringUtils类来计算Levenshtein距离。关于中文字符串的计算，需要将中文字符串转换成Unicode编码来进行计算。可以使用Java内置的String类的getBytes()方法将中文字符串转换为字节数组，再进行Levenshtein距离的计算。</p><p>Java代码实现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">float</span> <span class="title function_">Levenshtein</span><span class="params">(String a, String b)</span> &#123;</span><br><span class="line">       <span class="keyword">if</span> (a == <span class="literal">null</span> &amp;&amp; b == <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="number">1f</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (a == <span class="literal">null</span> || b == <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="number">0F</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="type">int</span> <span class="variable">editDistance</span> <span class="operator">=</span> editDis(a, b);</span><br><span class="line">       <span class="keyword">return</span> <span class="number">1</span> - ((<span class="type">float</span>) editDistance / Math.max(a.length(), b.length()));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">editDis</span><span class="params">(String a, String b)</span> &#123;</span><br><span class="line"></span><br><span class="line">       <span class="type">int</span> <span class="variable">aLen</span> <span class="operator">=</span> a.length();</span><br><span class="line">       <span class="type">int</span> <span class="variable">bLen</span> <span class="operator">=</span> b.length();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (aLen == <span class="number">0</span>) <span class="keyword">return</span> aLen;</span><br><span class="line">       <span class="keyword">if</span> (bLen == <span class="number">0</span>) <span class="keyword">return</span> bLen;</span><br><span class="line"></span><br><span class="line">       <span class="type">int</span>[][] v = <span class="keyword">new</span> <span class="title class_">int</span>[aLen + <span class="number">1</span>][bLen + <span class="number">1</span>];</span><br><span class="line">       <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= aLen; ++i) &#123;</span><br><span class="line">           <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt;= bLen; ++j) &#123;</span><br><span class="line">               <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">                   v[i][j] = j;</span><br><span class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</span><br><span class="line">                   v[i][j] = i;</span><br><span class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a.charAt(i - <span class="number">1</span>) == b.charAt(j - <span class="number">1</span>)) &#123;</span><br><span class="line">                   v[i][j] = v[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">               &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                   v[i][j] = <span class="number">1</span> + Math.min(v[i - <span class="number">1</span>][j - <span class="number">1</span>], Math.min(v[i][j - <span class="number">1</span>], v[i - <span class="number">1</span>][j]));</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> v[aLen][bLen];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><p>计算两个字符串之间的文本相似度可以使用多种方法，以下是其中的一些常见方法：</p><ol><li>Levenshtein距离：计算两个字符串之间的编辑距离，即需要通过多少次增删改操作才能将一个字符串转换成另一个字符串。距离越小表示相似度越高。</li><li>Jaccard相似度：将字符串看作是一个集合，计算两个集合的交集与并集之比。相似度越高，这个比值越大。</li><li>余弦相似度：将两个字符串看作是向量，计算它们的夹角余弦值。相似度越高，余弦值越接近1。</li><li>编辑距离算法：比如基于word2vec等的word mover’s distance (WMD)，FastText等，通过计算两个字符串之间的词向量距离来计算相似度。</li></ol><p>这些方法各有特点，可以根据具体需求来选择适合自己的计算方法。</p><p>不同的文本相似度计算方法各有其特点，主要如下：</p><ol><li>Levenshtein距离：计算简单，适用于较短的文本或单词，但对文本长度敏感，计算复杂度高，不适用于较长文本。</li><li>Jaccard相似度：适用于计算文本中的重复单词、短语等，对文本长度不敏感，但不适用于计算文本中的顺序。</li><li>余弦相似度：可适用于任意长度的文本，对文本中的单词顺序不敏感，但不能处理文本中的语义信息。</li><li>编辑距离算法：可以考虑文本中的语义信息，可处理较长文本，但计算复杂度高。</li></ol><p>总的来说，不同的计算方法适用于不同的文本类型和应用场景，需要根据具体需求选择合适的方法。在实际应用中，通常需要结合多种计算方法综合考虑文本的相似度。</p><p>Levenshtein距离适用于较短的文本或单词，但具体多短需要根据具体情况而定。通常来说，Levenshtein距离计算的复杂度是O(mn)，其中m和n分别是两个字符串的长度，因此当字符串的长度过长时，计算复杂度会变得非常高，导致计算时间过长或者计算结果不够准确。一般而言，Levenshtein距离适用于字符串长度在几十到一百个字符左右的情况。如果字符串长度过长，可以考虑使用其他文本相似度计算方法，如基于词向量的算法、基于语义的算法等。</p><p>Levenshtein距离方法计算文本相似度的精度取决于文本的特点和应用场景。一般而言，Levenshtein距离方法在计算短文本或者单词相似度时精度较高，但对于长文本或者语义复杂的文本，其相似度计算结果可能不够准确。此外，Levenshtein距离方法只考虑了文本中字符的编辑距离，未考虑语义信息，因此在处理语义相关的文本时，其精度也有限。总的来说，Levenshtein距离方法在某些场景下可以得到较好的相似度计算结果，但在处理一些复杂的文本时，需要结合其他计算方法或者算法来提高精度。</p>]]></content>
+    
+    
+    <summary type="html">🥧文本相似度</summary>
+    
+    
+    
+    <category term="Java" scheme="http://www.chasenchen.space/categories/Java/"/>
+    
+    
+    <category term="Java" scheme="http://www.chasenchen.space/tags/Java/"/>
+    
+    <category term="算法" scheme="http://www.chasenchen.space/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>白鹿原</title>
+    <link href="http://www.chasenchen.space/posts/20230607d.html"/>
+    <id>http://www.chasenchen.space/posts/20230607d.html</id>
+    <published>2023-05-27T11:19:03.000Z</published>
+    <updated>2023-05-27T11:19:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>​《白》看完了前五章，是狗厚的有两倍《挪》那么厚了。上来第一句话当头一棒，白嘉轩的7个老婆，当时想第7个是有什么特殊之处，大概是洞房之夜，褪去了拴在腰间的桃木棒追，象征打破封建的禁制，也体现了对嘉轩的信任。白嘉轩他种罂粟这个门路是哪来的，没找到，就像开了光似的。白先生也真乃圣人，两页纸筏编调和了矛盾，只是前文提到白先生一身君子正气，怕是要是在乱世中吃亏。</p><p>​朱先生很神，后面又提到仅凭一张嘴就清退了20万清军，他性格给我一种刚正不阿的感觉，怕是以后在乱世中要吃大亏。</p><p>前面感觉挺快乐的乡村生活，突然画风一变，闹革命了，别说白嘉轩了，我一个疫情纪元三年的人都懵了。按当时剪辫子，搞民主那一套像是辛亥革命之后了。但&quot;交农&quot;的事件，那任县长是个贪官吗，税收重了，然后就倒台了。</p><p>鹿兆鹏我暂时还没看出什么征兆，倒是白灵，出身时的百灵鸟鸣，儿时聪慧伶俐，写的一手好字，有主见，很像是冲破封建女性的代表人物。<br>分享：</p><p>​不料徐先生正蹲在里头。徐先生“哎呀”一声，就慌忙提起裤子夺路而出。白灵看见了徐先生白亮亮的屁股，看见了威严的徐先生惊慌失措的样子，忍不住嘎嘎嘎笑起来。这件事有声有色地在村子里传播，说徐先生情急之中把未拉下来的屎橛子带进裤裆里去了。</p><p>​这画面太喜感了，我接受过专业的训练，一般不会笑，除非忍不住。<br>​往后看到了，乱世中，谁都不能独善其身，换了一批又一批的县长，上层剥削却一层接一层。农民只关心今天要缴多少粮，不关心上层建筑是谁在统治。当缴的粮超出了预期，于是他们揭竿起义，中国的朝代皆是如此，轮回换代。白露仓的烧焚是农民的一次反抗，但缴粮反而更重了，无奈人肉不敌枪杆子，可谓是兴百姓苦，亡百姓苦。<br>关于鹿兆鹏的婚姻，后面还没看到他对他妻子如何。就前文来看，我觉得这是一段牺牲的婚姻，冲破封建的桎梏必有斗争和流血，而她妻子成为了那个时代的牺牲品，让我想起徐志摩的买办妻子张幼仪，这是上个时代遗留的问题，让她一生去偿还。她说她也不晓得她是否爱他，但为他做了这么多，应该是爱他的。鹿家在白鹿原上要跟冷家结姻这是上一代人改变不了的事，鹿兆鹏想改变，没成，因为他爷爷说我死给你看！冷家看不下去说兆鹏啊你把我闺女休了吧，鹿兆鹏他爹又不肯。所以这件事上，鹿家的先辈们也要摊点责任，鹿兆鹏说黑娃是他最敬佩的人(虽然不知道是不是真还是就是这样说想拉他入党)，因为黑娃实现了恋爱自由，当时鹿兆鹏说的时候我感觉还是很真诚的。<br>兆海和白灵感觉挺磕cp的，但是最后没在一起的话确实挺可惜的，那枚铜元的存在可能就暗示着这样的结局，象征国共两党终究是陌路殊途。<br>这回看到共在攻打西安，好家伙这会还是陈独秀在当书记吧，这叫不知敌我悬殊，以卵击石。倒是那时共画大饼有一手，什么攻下西安，羊肉泡沫葫芦鸡应有尽有，把我都看馋了，然后姜政委画完大饼就跑路了。都不是君子，鹿兆鹏滑稽的场面拔腿就跑，乱世之中，狗命。到这里，我是感觉到鹿兆鹏这个人不对劲了，把家里坑惨了，对老婆无情，对朋友也无义，行军之时也摇摆不定，最后还跟白灵在一起吗，不会吧不会吧。<br>​其实后面几章让我比较动容的还是黑娃后来娶了相濡以沫的高氏玉凤，以前是如此这般粗狂豪放，现在是发自内心的为过去反省，我觉得高姓氏给了很大的力量。黑娃给人感觉一种如果不了解人生是读不懂书的这种感觉，因为其实忠实给黑娃戏份很多，包括前面小娥，也很可悲，男性可以浪子回头，而女性却不行。<br>​纵看整本书，跟我当时刚看这边书那会还是一样的感觉：时代的灰尘落到人的头上是一生。但是我感觉这种情感更加细腻了，很多时候，历史的轮回，浪潮的褪去，由于人类群众创造历史，历史而不由个人决定。但现在看来，群众太宽泛，声声朗读背诵没有感觉，反而抽出其中的几个人落在白鹿村中，他们在这本小说中秘密呈现，诉说这这段不被人知的个体，每个人都是有血有肉，而又缓慢哀伤。</p>]]></content>
+    
+    
+    <summary type="html">🥧白鹿原</summary>
+    
+    
+    
+    <category term="读书笔记" scheme="http://www.chasenchen.space/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="Java" scheme="http://www.chasenchen.space/tags/Java/"/>
+    
+    <category term="算法" scheme="http://www.chasenchen.space/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Kafka Rebalance 问题</title>
     <link href="http://www.chasenchen.space/posts/2013454c.html"/>
     <id>http://www.chasenchen.space/posts/2013454c.html</id>
@@ -80,52 +126,6 @@
     <category term="Markdown" scheme="http://www.chasenchen.space/tags/Markdown/"/>
     
     <category term="外挂标签" scheme="http://www.chasenchen.space/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>文本相似度</title>
-    <link href="http://www.chasenchen.space/posts/20230607c.html"/>
-    <id>http://www.chasenchen.space/posts/20230607c.html</id>
-    <published>2022-06-01T13:19:03.000Z</published>
-    <updated>2022-06-01T13:19:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Levenshtein">Levenshtein</h2><p>Levenshtein距离是一种用于计算两个字符串之间的编辑距离的算法，可以用Java语言实现。在Java中，可以使用一个叫做Apache Commons Lang库中的StringUtils类来计算Levenshtein距离。关于中文字符串的计算，需要将中文字符串转换成Unicode编码来进行计算。可以使用Java内置的String类的getBytes()方法将中文字符串转换为字节数组，再进行Levenshtein距离的计算。</p><p>Java代码实现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">float</span> <span class="title function_">Levenshtein</span><span class="params">(String a, String b)</span> &#123;</span><br><span class="line">       <span class="keyword">if</span> (a == <span class="literal">null</span> &amp;&amp; b == <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="number">1f</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (a == <span class="literal">null</span> || b == <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="number">0F</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="type">int</span> <span class="variable">editDistance</span> <span class="operator">=</span> editDis(a, b);</span><br><span class="line">       <span class="keyword">return</span> <span class="number">1</span> - ((<span class="type">float</span>) editDistance / Math.max(a.length(), b.length()));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">editDis</span><span class="params">(String a, String b)</span> &#123;</span><br><span class="line"></span><br><span class="line">       <span class="type">int</span> <span class="variable">aLen</span> <span class="operator">=</span> a.length();</span><br><span class="line">       <span class="type">int</span> <span class="variable">bLen</span> <span class="operator">=</span> b.length();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (aLen == <span class="number">0</span>) <span class="keyword">return</span> aLen;</span><br><span class="line">       <span class="keyword">if</span> (bLen == <span class="number">0</span>) <span class="keyword">return</span> bLen;</span><br><span class="line"></span><br><span class="line">       <span class="type">int</span>[][] v = <span class="keyword">new</span> <span class="title class_">int</span>[aLen + <span class="number">1</span>][bLen + <span class="number">1</span>];</span><br><span class="line">       <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= aLen; ++i) &#123;</span><br><span class="line">           <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt;= bLen; ++j) &#123;</span><br><span class="line">               <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">                   v[i][j] = j;</span><br><span class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</span><br><span class="line">                   v[i][j] = i;</span><br><span class="line">               &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a.charAt(i - <span class="number">1</span>) == b.charAt(j - <span class="number">1</span>)) &#123;</span><br><span class="line">                   v[i][j] = v[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">               &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                   v[i][j] = <span class="number">1</span> + Math.min(v[i - <span class="number">1</span>][j - <span class="number">1</span>], Math.min(v[i][j - <span class="number">1</span>], v[i - <span class="number">1</span>][j]));</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> v[aLen][bLen];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><p>计算两个字符串之间的文本相似度可以使用多种方法，以下是其中的一些常见方法：</p><ol><li>Levenshtein距离：计算两个字符串之间的编辑距离，即需要通过多少次增删改操作才能将一个字符串转换成另一个字符串。距离越小表示相似度越高。</li><li>Jaccard相似度：将字符串看作是一个集合，计算两个集合的交集与并集之比。相似度越高，这个比值越大。</li><li>余弦相似度：将两个字符串看作是向量，计算它们的夹角余弦值。相似度越高，余弦值越接近1。</li><li>编辑距离算法：比如基于word2vec等的word mover’s distance (WMD)，FastText等，通过计算两个字符串之间的词向量距离来计算相似度。</li></ol><p>这些方法各有特点，可以根据具体需求来选择适合自己的计算方法。</p><p>不同的文本相似度计算方法各有其特点，主要如下：</p><ol><li>Levenshtein距离：计算简单，适用于较短的文本或单词，但对文本长度敏感，计算复杂度高，不适用于较长文本。</li><li>Jaccard相似度：适用于计算文本中的重复单词、短语等，对文本长度不敏感，但不适用于计算文本中的顺序。</li><li>余弦相似度：可适用于任意长度的文本，对文本中的单词顺序不敏感，但不能处理文本中的语义信息。</li><li>编辑距离算法：可以考虑文本中的语义信息，可处理较长文本，但计算复杂度高。</li></ol><p>总的来说，不同的计算方法适用于不同的文本类型和应用场景，需要根据具体需求选择合适的方法。在实际应用中，通常需要结合多种计算方法综合考虑文本的相似度。</p><p>Levenshtein距离适用于较短的文本或单词，但具体多短需要根据具体情况而定。通常来说，Levenshtein距离计算的复杂度是O(mn)，其中m和n分别是两个字符串的长度，因此当字符串的长度过长时，计算复杂度会变得非常高，导致计算时间过长或者计算结果不够准确。一般而言，Levenshtein距离适用于字符串长度在几十到一百个字符左右的情况。如果字符串长度过长，可以考虑使用其他文本相似度计算方法，如基于词向量的算法、基于语义的算法等。</p><p>Levenshtein距离方法计算文本相似度的精度取决于文本的特点和应用场景。一般而言，Levenshtein距离方法在计算短文本或者单词相似度时精度较高，但对于长文本或者语义复杂的文本，其相似度计算结果可能不够准确。此外，Levenshtein距离方法只考虑了文本中字符的编辑距离，未考虑语义信息，因此在处理语义相关的文本时，其精度也有限。总的来说，Levenshtein距离方法在某些场景下可以得到较好的相似度计算结果，但在处理一些复杂的文本时，需要结合其他计算方法或者算法来提高精度。</p>]]></content>
-    
-    
-    <summary type="html">🥧文本相似度</summary>
-    
-    
-    
-    <category term="Java" scheme="http://www.chasenchen.space/categories/Java/"/>
-    
-    
-    <category term="Java" scheme="http://www.chasenchen.space/tags/Java/"/>
-    
-    <category term="算法" scheme="http://www.chasenchen.space/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>白鹿原</title>
-    <link href="http://www.chasenchen.space/posts/20230607d.html"/>
-    <id>http://www.chasenchen.space/posts/20230607d.html</id>
-    <published>2022-05-27T11:19:03.000Z</published>
-    <updated>2022-05-27T11:19:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>​《白》看完了前五章，是狗厚的有两倍《挪》那么厚了。上来第一句话当头一棒，白嘉轩的7个老婆，当时想第7个是有什么特殊之处，大概是洞房之夜，褪去了拴在腰间的桃木棒追，象征打破封建的禁制，也体现了对嘉轩的信任。白嘉轩他种罂粟这个门路是哪来的，没找到，就像开了光似的。白先生也真乃圣人，两页纸筏编调和了矛盾，只是前文提到白先生一身君子正气，怕是要是在乱世中吃亏。</p><p>​朱先生很神，后面又提到仅凭一张嘴就清退了20万清军，他性格给我一种刚正不阿的感觉，怕是以后在乱世中要吃大亏。</p><p>前面感觉挺快乐的乡村生活，突然画风一变，闹革命了，别说白嘉轩了，我一个疫情纪元三年的人都懵了。按当时剪辫子，搞民主那一套像是辛亥革命之后了。但&quot;交农&quot;的事件，那任县长是个贪官吗，税收重了，然后就倒台了。</p><p>鹿兆鹏我暂时还没看出什么征兆，倒是白灵，出身时的百灵鸟鸣，儿时聪慧伶俐，写的一手好字，有主见，很像是冲破封建女性的代表人物。<br>分享：</p><p>​不料徐先生正蹲在里头。徐先生“哎呀”一声，就慌忙提起裤子夺路而出。白灵看见了徐先生白亮亮的屁股，看见了威严的徐先生惊慌失措的样子，忍不住嘎嘎嘎笑起来。这件事有声有色地在村子里传播，说徐先生情急之中把未拉下来的屎橛子带进裤裆里去了。</p><p>​这画面太喜感了，我接受过专业的训练，一般不会笑，除非忍不住。<br>​往后看到了，乱世中，谁都不能独善其身，换了一批又一批的县长，上层剥削却一层接一层。农民只关心今天要缴多少粮，不关心上层建筑是谁在统治。当缴的粮超出了预期，于是他们揭竿起义，中国的朝代皆是如此，轮回换代。白露仓的烧焚是农民的一次反抗，但缴粮反而更重了，无奈人肉不敌枪杆子，可谓是兴百姓苦，亡百姓苦。<br>关于鹿兆鹏的婚姻，后面还没看到他对他妻子如何。就前文来看，我觉得这是一段牺牲的婚姻，冲破封建的桎梏必有斗争和流血，而她妻子成为了那个时代的牺牲品，让我想起徐志摩的买办妻子张幼仪，这是上个时代遗留的问题，让她一生去偿还。她说她也不晓得她是否爱他，但为他做了这么多，应该是爱他的。鹿家在白鹿原上要跟冷家结姻这是上一代人改变不了的事，鹿兆鹏想改变，没成，因为他爷爷说我死给你看！冷家看不下去说兆鹏啊你把我闺女休了吧，鹿兆鹏他爹又不肯。所以这件事上，鹿家的先辈们也要摊点责任，鹿兆鹏说黑娃是他最敬佩的人(虽然不知道是不是真还是就是这样说想拉他入党)，因为黑娃实现了恋爱自由，当时鹿兆鹏说的时候我感觉还是很真诚的。<br>兆海和白灵感觉挺磕cp的，但是最后没在一起的话确实挺可惜的，那枚铜元的存在可能就暗示着这样的结局，象征国共两党终究是陌路殊途。<br>这回看到共在攻打西安，好家伙这会还是陈独秀在当书记吧，这叫不知敌我悬殊，以卵击石。倒是那时共画大饼有一手，什么攻下西安，羊肉泡沫葫芦鸡应有尽有，把我都看馋了，然后姜政委画完大饼就跑路了。都不是君子，鹿兆鹏滑稽的场面拔腿就跑，乱世之中，狗命。到这里，我是感觉到鹿兆鹏这个人不对劲了，把家里坑惨了，对老婆无情，对朋友也无义，行军之时也摇摆不定，最后还跟白灵在一起吗，不会吧不会吧。<br>​其实后面几章让我比较动容的还是黑娃后来娶了相濡以沫的高氏玉凤，以前是如此这般粗狂豪放，现在是发自内心的为过去反省，我觉得高姓氏给了很大的力量。黑娃给人感觉一种如果不了解人生是读不懂书的这种感觉，因为其实忠实给黑娃戏份很多，包括前面小娥，也很可悲，男性可以浪子回头，而女性却不行。<br>​纵看整本书，跟我当时刚看这边书那会还是一样的感觉：时代的灰尘落到人的头上是一生。但是我感觉这种情感更加细腻了，很多时候，历史的轮回，浪潮的褪去，由于人类群众创造历史，历史而不由个人决定。但现在看来，群众太宽泛，声声朗读背诵没有感觉，反而抽出其中的几个人落在白鹿村中，他们在这本小说中秘密呈现，诉说这这段不被人知的个体，每个人都是有血有肉，而又缓慢哀伤。</p>]]></content>
-    
-    
-    <summary type="html">🥧白鹿原</summary>
-    
-    
-    
-    <category term="读书笔记" scheme="http://www.chasenchen.space/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="Java" scheme="http://www.chasenchen.space/tags/Java/"/>
-    
-    <category term="算法" scheme="http://www.chasenchen.space/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
