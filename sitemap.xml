@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.chasenchen.space/posts/20230731c.html</loc>
+    
+    <lastmod>2023-07-31</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://www.chasenchen.space/tags/index.html</loc>
     
     <lastmod>2023-06-10</lastmod>
@@ -193,7 +202,7 @@
 
   <url>
     <loc>http://www.chasenchen.space/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -201,42 +210,49 @@
   
   <url>
     <loc>http://www.chasenchen.space/tags/Java/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.chasenchen.space/tags/Kafka/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.chasenchen.space/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.chasenchen.space/tags/%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.chasenchen.space/tags/Markdown/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.chasenchen.space/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.chasenchen.space/tags/sql/</loc>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -245,21 +261,21 @@
   
   <url>
     <loc>http://www.chasenchen.space/categories/Java/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.chasenchen.space/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://www.chasenchen.space/categories/%E6%BC%94%E7%A4%BA/</loc>
-    <lastmod>2023-06-10</lastmod>
+    <lastmod>2023-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
